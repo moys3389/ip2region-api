@@ -22,7 +22,7 @@ docker run -d --name ip2region -e CORS=* -p 8080:8080 moys3389/ip2region-api:lat
 # 查看版本
 curl 127.0.0.1:8080/api/version
 
-# 查询自己IP
+# 查询访问者的IP
 curl 127.0.0.1:8080/api/search
 
 # 指定IP查询(GET)
@@ -36,4 +36,15 @@ curl 127.0.0.1:8080/api/batch-search?ip=1.1.1.1,2.2.2.2,3.3.3.3
 
 # 批量IP查询(POST)
 curl -X POST -H "Content-Type: application/json" -d '{"ips":["1.1.1.1","2.2.2.2","3.3.3.3"]}' 127.0.0.1:8080/api/batch-search
+```
+
+### 使用浏览器查看
+```
+# 查看访问者的IP
+http://127.0.0.1:8080/api/search-page
+
+# 指定IP查询
+http://127.0.0.1:8080/api/search-page?ip=1.1.1.1
+
+显示格式为: 当前IP:x.x.x.x 来自于:XXXX
 ```

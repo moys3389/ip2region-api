@@ -30,6 +30,7 @@ func (a *App) Start() error {
 		apiGroup.POST("search", a.searchHandler.HandleSearch)
 		apiGroup.GET("batch-search", a.searchHandler.HandleBatchSearchByQuery)
 		apiGroup.POST("batch-search", a.searchHandler.HandleBatchSearch)
+		apiGroup.GET("search-page", a.searchHandler.HandleSearchPage)
 		apiGroup.GET("version", func(ctx *gin.Context) { ctx.String(http.StatusOK, "version: "+a.cfg.Version) })
 	}
 
