@@ -36,7 +36,7 @@ func (h *SearchHandler) HandleSearch(ctx *gin.Context) {
 func (h *SearchHandler) HandleSearchByQuery(ctx *gin.Context) {
 	ip := ctx.Query("ip")
 	if ip == "" {
-		ip = ctx.RemoteIP()
+		ip = ctx.ClientIP()
 	}
 
 	if ip == "::1" {
