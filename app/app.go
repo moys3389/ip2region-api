@@ -24,6 +24,8 @@ func (a *App) Start() error {
 		a.server.Use(cors.New(cfg))
 	}
 
+	a.server.GET("/", a.searchHandler.HandleSearchPage)
+
 	apiGroup := a.server.Group("api")
 	{
 		apiGroup.GET("search", a.searchHandler.HandleSearchByQuery)
