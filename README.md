@@ -48,3 +48,9 @@ http://127.0.0.1:8080/api/search-page?ip=1.1.1.1
 
 显示格式为: 当前IP:x.x.x.x 来自于:XXXX
 ```
+
+### 使用自定义的xdb文件
+```
+# 支持使用自定义的xdb文件,只需将xdb文件映射到容器的/data/ip2region.xdb即可
+docker run -d --name ip2region -p 8080:8080 -v /path/to/ip2region.xdb:/data/ip2region.xdb moys3389/ip2region-api:latest
+```

@@ -2,6 +2,8 @@ package service
 
 import (
 	_ "embed"
+	"log"
+	"os"
 	"strings"
 
 	"github.com/lionsoul2014/ip2region/binding/golang/xdb"
@@ -30,7 +32,17 @@ func (s *SearchService) Search(ip string) (string, error) {
 }
 
 func NewSearchService(i do.Injector) (*SearchService, error) {
-	searcher, err := xdb.NewWithBuffer(ip2region_xdb)
+	xdbFileName := "/data/ip2region.xdb"
+	buff := ip2region_xdb
+	_, err := os.Lstat(xdbFileName)
+	if !os.IsNotExist(err) {
+		log.Println("使用自定义xdb")
+		buff, err = os.ReadFile(xdbFileName)
+		if err != nil {
+			return nil, err
+		}
+	}
+	searcher, err := xdb.NewWithBuffer(buff)
 	if err != nil {
 		return nil, err
 	}
