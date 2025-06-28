@@ -21,6 +21,10 @@ func (h *SearchHandler) HandleSearch(ctx *gin.Context) {
 		return
 	}
 
+	if req.Ip == "" {
+		req.Ip = GetClientIP(ctx)
+	}
+
 	result, err := h.searchService.Search(req.Ip)
 	if err != nil {
 		ResponseFail(ctx, err)
@@ -36,11 +40,7 @@ func (h *SearchHandler) HandleSearch(ctx *gin.Context) {
 func (h *SearchHandler) HandleSearchByQuery(ctx *gin.Context) {
 	ip := ctx.Query("ip")
 	if ip == "" {
-		ip = ctx.ClientIP()
-	}
-
-	if ip == "::1" {
-		ip = "127.0.0.1"
+		ip = GetClientIP(ctx)
 	}
 
 	result, err := h.searchService.Search(ip)
@@ -53,6 +53,14 @@ func (h *SearchHandler) HandleSearchByQuery(ctx *gin.Context) {
 		"ip":     ip,
 		"region": result,
 	})
+}
+
+func GetClientIP(ctx *gin.Context) string {
+	clientIP := ctx.ClientIP()
+	if clientIP == "::1" {
+		return "127.0.0.1"
+	}
+	return clientIP
 }
 
 func NewSearchHandler(i do.Injector) (*SearchHandler, error) {
